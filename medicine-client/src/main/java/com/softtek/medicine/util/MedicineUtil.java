@@ -58,7 +58,11 @@ public class MedicineUtil {
         this.pass = pass;
         this.msg = msg;
         this.history = history;
-
+statusServer();
+        history.append("*******************************\n");
+        history.append("Enviando pedido de autenticação\n");
+        history.append("*******************************\n");
+        msg.setText(history.toString());
         this.ctx = this.login(this.user, this.pass, this.msg, this.history);
 
         String queryList = "( \'Assigned Group\' = \"" + groupName
@@ -356,7 +360,7 @@ public class MedicineUtil {
 //            System.out.println("Query returned " + nMatches + " matches.");
         } catch (ARException e) {
             //  ARExceptionHandler(e, "Problem while querying by qualifier. ");
-            history.append("Problem while querying by qualifier. ");
+            history.append("Problem while querying by qualifier. \n");
             history.append(e.getMessage());
             history.append("\n");
             msg.setText(history.toString());
@@ -504,9 +508,12 @@ public class MedicineUtil {
             getRequest.addHeader("accept", "application/json");
 
             HttpResponse response = httpClient.execute(getRequest);
+            history.append("\n");
             history.append(getRequest);
             history.append("\n");
-            history.append("response.getStatusLine().getStatusCode()\n");
+            history.append("Server response : ");
+            history.append(response.getStatusLine().getStatusCode());
+            history.append("\n");
             msg.setText(history.toString());
 
             if (response.getStatusLine().getStatusCode() != 200) {

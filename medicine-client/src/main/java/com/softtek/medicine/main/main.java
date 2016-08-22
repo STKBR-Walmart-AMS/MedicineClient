@@ -6,6 +6,7 @@
 package com.softtek.medicine.main;
 
 import com.softtek.medicine.util.MedicineUtil;
+import java.util.Arrays;
 
 /**
  *
@@ -52,7 +53,6 @@ public class main extends javax.swing.JFrame {
 
         jLabel2.setText("Senha :");
 
-        jPasswordField1.setText("jPasswordField1");
         jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jPasswordField1ActionPerformed(evt);
@@ -153,16 +153,19 @@ public class main extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-       jTextArea1.setText("funciona?");
-       StringBuilder history= new StringBuilder();
-       history.append("Medicine request Start\n");
+        
+        StringBuilder history = new StringBuilder();
+        history.append("Medicine request Start\n");
         jTextArea1.setText(history.toString());
-       
+
         MedicineUtil util = new MedicineUtil();
-        util.sendData("aazagui", "S2012Jg0506", this.jTextArea1, history);
+
+        char[] pwdc = jPasswordField1.getPassword();
+        String pwd = new String(pwdc);
         
-        
-        
+        util.sendData(jTextField1.getText(), pwd, this.jTextArea1, history);
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
