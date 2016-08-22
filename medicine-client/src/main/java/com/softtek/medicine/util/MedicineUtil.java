@@ -254,9 +254,13 @@ public class MedicineUtil {
         msg.setText(history.toString());
 
         try {
-            // Retrieve the detail info of all fields from the form.
+
+            history.append("Retrieve the detail info of all fields from the form. \n");
+            msg.setText(history.toString());
             List<Field> fields = ctx.getListFieldObjects(formName);
-            // Create the search qualifier.
+
+            history.append("Create the search qualifier. \n");
+            msg.setText(history.toString());
             QualifierInfo qual = ctx.parseQualification(qualStr, fields, null,
                     Constants.AR_QUALCONTEXT_DEFAULT);
 
@@ -287,8 +291,9 @@ public class MedicineUtil {
             OutputInteger nMatches = new OutputInteger();
             List<SortInfo> sortOrder = new ArrayList<SortInfo>();
             sortOrder.add(new SortInfo(2, Constants.AR_SORT_DESCENDING));
-            // Retrieve entries from the form using the given
-            // qualification.
+            history.append("Retrieve entries from the form using the given qualification. \n");
+            msg.setText(history.toString());
+
             entryList = ctx.getListEntryObjects(formName, qual, 0,
                     Constants.AR_NO_MAX_LIST_RETRIEVE, sortOrder, fieldIds,
                     true, nMatches);
@@ -308,7 +313,9 @@ public class MedicineUtil {
 
                     Object[] list = lst.values().toArray();
 
-                    System.out.println(list[4]);
+                    history.append(list[4]);
+                    history.append("\n");
+                    msg.setText(history.toString());
 
                     /* mandatory fields */
                     incident.setEntryId(list[0] == null ? null : list[0].toString()); // 1
