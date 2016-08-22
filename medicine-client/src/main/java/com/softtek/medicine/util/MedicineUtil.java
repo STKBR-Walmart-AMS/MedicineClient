@@ -58,7 +58,7 @@ public class MedicineUtil {
         this.pass = pass;
         this.msg = msg;
         this.history = history;
-statusServer();
+
         history.append("*******************************\n");
         history.append("Enviando pedido de autenticação\n");
         history.append("*******************************\n");
