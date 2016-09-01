@@ -5,14 +5,20 @@
  */
 package com.softtek.medicine.main;
 
+import com.softtek.medicine.model.Incident;
 import com.softtek.medicine.util.MedicineUtil;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import org.springframework.web.client.RestTemplate;
 
 /**
  *
  * @author Alam
  */
 public class main extends javax.swing.JFrame {
+
+    public static final String SERVER_URI = "http://medicineweb-stkbr.rhcloud.com/";
 
     /**
      * Creates new form main
@@ -153,18 +159,30 @@ public class main extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
+
         StringBuilder history = new StringBuilder();
         history.append("Medicine request Start\n");
         jTextArea1.setText(history.toString());
 
-        MedicineUtil util = new MedicineUtil();
+       
+        RestTemplate restTemplateTest = new RestTemplate();
+        List<LinkedHashMap> emps = restTemplateTest.getForObject(SERVER_URI + "/dr/incidents/request", List.class);
+        System.out.println(emps.size());
 
+        MedicineUtil util = new MedicineUtil();
+        List<Incident> incidentList = new ArrayList<>();
         char[] pwdc = jPasswordField1.getPassword();
         String pwd = new String(pwdc);
-        
-        util.sendData(jTextField1.getText(), pwd, this.jTextArea1, history);
 
+        incidentList = util.recoverInidents(jTextField1.getText(), pwd, null);
+        if (!incidentList.isEmpty()) {
+            RestTemplate restTemplate = new RestTemplate();
+            System.out.println("recover incidents\n");
+            String result = restTemplate.postForObject(SERVER_URI + "/dr/incidents/update", incidentList, String.class);
+            System.out.println(result);
+        }
+
+//        util.sendData(jTextField1.getText(), pwd, this.jTextArea1, history);
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
